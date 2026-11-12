@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System | College Portal</title>
+    <!-- Google Fonts for sleek typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- ================= SIDEBAR NAVIGATION ================= -->
+        <aside class="sidebar" id="sidebar">
+            <div class="brand-section">
+                <div class="brand-icon">🎓</div>
+                <div>
+                    <div class="brand-title">EduTrack</div>
+                    <div class="brand-sub">Student Portal</div>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                <li>
+                    <a class="nav-item active" data-view="home">
+                        <span class="nav-icon">🏠</span>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-item" data-view="dashboard">
+                        <span class="nav-icon">📊</span>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-item" data-view="view-students">
+                        <span class="nav-icon">👥</span>
+                        <span>View All Students</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-item" data-view="add-student">
+                        <span class="nav-icon">➕</span>
+                        <span>Add Student</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-item" data-view="search-student">
+                        <span class="nav-icon">🔍</span>
+                        <span>Search Student</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="db-status-badge">
+                    <span class="status-dot"></span>
+                    <span>Backend: Java & MySQL</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ================= MAIN WRAPPER ================= -->
+        <div class="main-wrapper">
+
+            <!-- Topbar Header -->
+            <header class="topbar">
+                <div style="display: flex; align-items: center; gap: 14px;">
+                    <button class="btn-mobile-nav" id="mobileMenuBtn" aria-label="Toggle Navigation">☰</button>
+                    <div class="page-heading">
+                        <h1 id="pageTitle">College Overview</h1>
+                        <p id="pageDesc">Welcome to the Student Management System</p>
+                    </div>
+                </div>
+
+                <div class="topbar-actions">
+                    <button class="btn btn-primary" data-view="add-student" style="padding: 9px 18px; font-size: 13px;">
+                        <span>➕</span>
+                        <span>New Student</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <main class="content-body">
+
+                <!-- 1. HOME VIEW PANEL -->
+                <section class="view-panel active" id="view-home">
+                    <!-- Hero Banner -->
+                    <div class="hero-card">
+                        <span class="hero-tag">Official College Management</span>
+                        <h2 class="hero-title">Welcome to the Student Management System</h2>
+                        <p class="hero-desc">
+                            A streamlined, professional academic portal designed for administrators and educators. 
+                            Manage student enrollments, academic progression, department records, and contact directories 
+                            with full CRUD capabilities powered by Java Servlets, JDBC, and MySQL.
+                        </p>
+                        <div class="hero-actions">
+                            <button class="btn-hero-primary" data-view="dashboard">
+                                <span>📊</span>
+                                <span>Open Dashboard</span>
+                            </button>
+                            <button class="btn-hero-secondary" data-view="view-students">
+                                <span>👥</span>
+                                <span>View All Students</span>
+                            </button>
+                            <button class="btn-hero-secondary" data-view="add-student">
+                                <span>➕</span>
+                                <span>Register Student</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Highlight Feature Boxes -->
+                    <div class="features-grid">
+                        <div class="feature-box">
+                            <div class="feature-icon-wrapper icon-blue">🗄️</div>
+                            <h3>Centralized Records</h3>
+                            <p>Store and access comprehensive student profiles with unique registration numbers and department tags.</p>
+                        </div>
+                        <div class="feature-box">
+                            <div class="feature-icon-wrapper icon-purple">⚡</div>
+                            <h3>Instant Search & Filter</h3>
+                            <p>Real-time query engine to look up students by name, registration ID, department, or year of study in milliseconds.</p>
+                        </div>
+                        <div class="feature-box">
+                            <div class="feature-icon-wrapper icon-cyan">📈</div>
+                            <h3>Department Analytics</h3>
+                            <p>Visual statistics and progress indicators showing student distribution across all college engineering branches.</p>
+                        </div>
+                        <div class="feature-box">
+                            <div class="feature-icon-wrapper icon-emerald">🛡️</div>
+                            <h3>Reliable Java Backend</h3>
+                            <p>Clean Java architecture using JDBC PreparedStatements for robust database security and ACID compliance.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. DASHBOARD VIEW PANEL -->
+                <section class="view-panel" id="view-dashboard">
+                    <!-- Stat Metric Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <div class="stat-label">Total Students</div>
+                                <div class="stat-value" id="dashTotalStudents">0</div>
+                            </div>
+                            <div class="stat-icon-circle stat-icon-1">👥</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <div class="stat-label">Departments</div>
+                                <div class="stat-value" id="dashTotalDepts">0</div>
+                            </div>
+                            <div class="stat-icon-circle stat-icon-2">🏛️</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <div class="stat-label">Final Year (4th)</div>
+                                <div class="stat-value" id="dashFinalYear">0</div>
+                            </div>
+                            <div class="stat-icon-circle stat-icon-3">🎓</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <div class="stat-label">First Year (1st)</div>
+                                <div class="stat-value" id="dashFirstYear">0</div>
+                            </div>
+                            <div class="stat-icon-circle stat-icon-4">🌱</div>
+                        </div>
+                    </div>
+
+                    <!-- 2-Column Analytics & Recent Records -->
+                    <div class="dashboard-grid">
+                        <!-- Left: Recent Students -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title"><span>🕒</span> Recent Registrations</h3>
+                                <button class="btn btn-secondary" data-view="view-students" style="padding: 6px 14px; font-size: 12px;">
+                                    View All
+                                </button>
+                            </div>
+                            <div class="card-body" style="padding: 0;">
+                                <div class="table-responsive" style="border: none;">
+                                    <table class="custom-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Reg No</th>
+                                                <th>Student Name</th>
+                                                <th>Department</th>
+                                                <th>Year</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="dashboardRecentTableBody">
+                                            <!-- Dynamically populated by app.js -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right: Department Distribution & Quick Actions -->
+                        <div style="display: flex; flex-direction: column; gap: 24px;">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"><span>📊</span> Department Breakdown</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="dept-list" id="dashboardDeptList">
+                                        <!-- Dynamically populated by app.js -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title"><span>⚡</span> Quick Actions</h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="quick-actions-list">
+                                        <a class="quick-action-btn" data-view="add-student">
+                                            <span>➕ Add New Student</span>
+                                            <span>→</span>
+                                        </a>
+                                        <a class="quick-action-btn" data-view="search-student">
+                                            <span>🔍 Search Student Database</span>
+                                            <span>→</span>
+                                        </a>
+                                        <a class="quick-action-btn" data-view="view-students">
+                                            <span>📋 Manage All Records</span>
+                                            <span>→</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. VIEW ALL STUDENTS PANEL -->
+                <section class="view-panel" id="view-students">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><span>📋</span> Registered Student Directory</h3>
+                            <button class="btn btn-primary" data-view="add-student" style="padding: 8px 16px; font-size: 13px;">
+                                <span>➕</span>
+                                <span>Add Student</span>
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <!-- Table Toolbar with Filters -->
+                            <div class="table-toolbar">
+                                <div class="search-box">
+                                    <span>🔍</span>
+                                    <input type="text" id="tableSearchInput" placeholder="Quick search by name, register number or email...">
+                                </div>
+                                <div class="filter-group">
+                                    <select class="select-filter" id="tableDeptFilter">
+                                        <option value="All">All Departments</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Electronics & Communication">Electronics & Communication</option>
+                                        <option value="Electrical & Electronics">Electrical & Electronics</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                        <option value="Civil Engineering">Civil Engineering</option>
+                                    </select>
+                                    <select class="select-filter" id="tableYearFilter">
+                                        <option value="All">All Years</option>
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                        <option value="4th Year">4th Year</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Responsive Table -->
+                            <div class="table-responsive">
+                                <table class="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Reg No</th>
+                                            <th>Student Name</th>
+                                            <th>Email Address</th>
+                                            <th>Phone Number</th>
+                                            <th>Department</th>
+                                            <th>Year of Study</th>
+                                            <th style="text-align: center;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="studentsTableBody">
+                                        <!-- Dynamically populated by app.js -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. ADD STUDENT PANEL -->
+                <section class="view-panel" id="view-add-student">
+                    <div class="form-card">
+                        <div style="text-align: center; margin-bottom: 28px;">
+                            <h2 style="font-size: 22px; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">Register New Student</h2>
+                            <p style="font-size: 14px; color: var(--text-muted);">Fill in the details below to add a student to the college database.</p>
+                        </div>
+
+                        <form id="addStudentForm">
+                            <div class="form-grid">
+                                <!-- Student Name -->
+                                <div class="form-group">
+                                    <label class="form-label" for="addName">Full Name <span class="req">*</span></label>
+                                    <input type="text" id="addName" class="form-control" placeholder="e.g. John Doe" required>
+                                </div>
+
+                                <!-- Register Number -->
+                                <div class="form-group">
+                                    <label class="form-label" for="addRegNo">Register Number <span class="req">*</span></label>
+                                    <input type="text" id="addRegNo" class="form-control" placeholder="e.g. REG2024009" required>
+                                </div>
+
+                                <!-- Email -->
+                                <div class="form-group">
+                                    <label class="form-label" for="addEmail">College / Personal Email <span class="req">*</span></label>
+                                    <input type="email" id="addEmail" class="form-control" placeholder="e.g. student@college.edu" required>
+                                </div>
+
+                                <!-- Phone Number -->
+                                <div class="form-group">
+                                    <label class="form-label" for="addPhone">Phone Number <span class="req">*</span></label>
+                                    <input type="tel" id="addPhone" class="form-control" placeholder="e.g. 9876543210" required>
+                                </div>
+
+                                <!-- Department -->
+                                <div class="form-group">
+                                    <label class="form-label" for="addDepartment">Department <span class="req">*</span></label>
+                                    <select id="addDepartment" class="form-control" required>
+                                        <option value="">Select Department...</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Electronics & Communication">Electronics & Communication</option>
+                                        <option value="Electrical & Electronics">Electrical & Electronics</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                        <option value="Civil Engineering">Civil Engineering</option>
+                                    </select>
+                                </div>
+
+                                <!-- Year of Study -->
+                                <div class="form-group">
+                                    <label class="form-label" for="addYearOfStudy">Year of Study <span class="req">*</span></label>
+                                    <select id="addYearOfStudy" class="form-control" required>
+                                        <option value="">Select Year...</option>
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                        <option value="4th Year">4th Year</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="reset" class="btn btn-secondary">
+                                    <span>🔄</span>
+                                    <span>Reset Form</span>
+                                </button>
+                                <button type="submit" class="btn btn-primary">
+                                    <span>💾</span>
+                                    <span>Save & Register Student</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- 5. SEARCH STUDENT PANEL -->
+                <section class="view-panel" id="view-search-student">
+                    <div class="card" style="margin-bottom: 24px;">
+                        <div class="card-header">
+                            <h3 class="card-title"><span>🔍</span> Advanced Student Search</h3>
+                        </div>
+                        <div class="card-body">
+                            <form id="dedicatedSearchForm">
+                                <div class="form-grid" style="margin-bottom: 16px;">
+                                    <div class="form-group">
+                                        <label class="form-label" for="dedicatedSearchQuery">Search Keyword</label>
+                                        <input type="text" id="dedicatedSearchQuery" class="form-control" placeholder="Search by name, register number or email...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="dedicatedSearchDept">Department Filter</label>
+                                        <select id="dedicatedSearchDept" class="form-control">
+                                            <option value="All">All Departments</option>
+                                            <option value="Computer Science">Computer Science</option>
+                                            <option value="Information Technology">Information Technology</option>
+                                            <option value="Electronics & Communication">Electronics & Communication</option>
+                                            <option value="Electrical & Electronics">Electrical & Electronics</option>
+                                            <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                            <option value="Civil Engineering">Civil Engineering</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="dedicatedSearchYear">Year of Study Filter</label>
+                                        <select id="dedicatedSearchYear" class="form-control">
+                                            <option value="All">All Years</option>
+                                            <option value="1st Year">1st Year</option>
+                                            <option value="2nd Year">2nd Year</option>
+                                            <option value="3rd Year">3rd Year</option>
+                                            <option value="4th Year">4th Year</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="justify-content: flex-end;">
+                                        <div style="display: flex; gap: 10px;">
+                                            <button type="submit" class="btn btn-primary" style="flex: 1;">
+                                                <span>🔍</span> Search
+                                            </button>
+                                            <button type="button" id="resetSearchBtn" class="btn btn-secondary" style="flex: 1;">
+                                                <span>🔄</span> Reset
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Search Results Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><span>📄</span> Matching Records</h3>
+                            <span class="badge badge-purple" id="searchResultCount">0 record(s) found</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="custom-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Reg No</th>
+                                            <th>Student Name</th>
+                                            <th>Email Address</th>
+                                            <th>Phone Number</th>
+                                            <th>Department</th>
+                                            <th>Year of Study</th>
+                                            <th style="text-align: center;">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dedicatedSearchResultsBody">
+                                        <!-- Dynamically populated by app.js -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ================= EDIT STUDENT MODAL ================= -->
+    <div class="modal-overlay" id="editStudentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><span>✏️</span> Edit Student Details</h3>
+                <button class="btn-close-modal" onclick="closeEditModal()" aria-label="Close Modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="editStudentForm">
+                    <input type="hidden" id="editStudentId">
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="editName">Full Name <span class="req">*</span></label>
+                            <input type="text" id="editName" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="editRegNo">Register Number <span class="req">*</span></label>
+                            <input type="text" id="editRegNo" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="editEmail">Email Address <span class="req">*</span></label>
+                            <input type="email" id="editEmail" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="editPhone">Phone Number <span class="req">*</span></label>
+                            <input type="tel" id="editPhone" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="editDepartment">Department <span class="req">*</span></label>
+                            <select id="editDepartment" class="form-control" required>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information Technology">Information Technology</option>
+                                <option value="Electronics & Communication">Electronics & Communication</option>
+                                <option value="Electrical & Electronics">Electrical & Electronics</option>
+                                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                <option value="Civil Engineering">Civil Engineering</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="editYearOfStudy">Year of Study <span class="req">*</span></label>
+                            <select id="editYearOfStudy" class="form-control" required>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" onclick="closeEditModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">
+                            <span>💾</span>
+                            <span>Save Changes</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= DELETE CONFIRMATION MODAL ================= -->
+    <div class="modal-overlay" id="deleteConfirmModal">
+        <div class="modal-content" style="max-width: 460px;">
+            <div class="modal-header">
+                <h3 class="modal-title" style="color: var(--danger);"><span>⚠️</span> Confirm Deletion</h3>
+                <button class="btn-close-modal" onclick="closeDeleteModal()" aria-label="Close Modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteModalDesc" style="font-size: 14px; color: var(--text-secondary); margin-bottom: 24px;">
+                    Are you sure you want to delete this student record?
+                </p>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+                        <span>🗑️</span>
+                        <span>Yes, Delete Student</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= TOAST CONTAINER ================= -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
